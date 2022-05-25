@@ -19,7 +19,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
-        console.log('db connected');
+        const partsCollection = client.db('cyber_slice').collection('parts');
+
+
+        // to have all parts
+        app.get('/parts', async (req, res) => {
+            const parts = await partsCollection.find().toArray();
+            res.send(parts);
+        });
     }
     finally {
 
