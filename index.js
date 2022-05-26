@@ -20,6 +20,7 @@ async function run() {
     try {
         await client.connect();
         const partsCollection = client.db('cyber_slice').collection('parts');
+        const reviewCollection = client.db('cyber_slice').collection('reviews');
 
 
         // to get all parts
@@ -34,6 +35,12 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const part = await partsCollection.findOne(query);
             res.send(part);
+        });
+
+        // to get all the reviews
+        app.get('/reviews', async (req, res) => {
+            const reviews = await reviewCollection.find().toArray();
+            res.send(reviews);
         });
     }
     finally {
