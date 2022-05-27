@@ -24,6 +24,8 @@ async function run() {
         const orderCollection = client.db('cyber_slice').collection('order');
 
 
+        // ------------------ PARTS -------------------
+
         // to get all parts
         app.get('/parts', async (req, res) => {
             const parts = await partsCollection.find().toArray();
@@ -38,18 +40,40 @@ async function run() {
             res.send(part);
         });
 
+        // ----------------------------------------------
+
+
+
+        // ------------------ REVIEWS --------------------
+
         // to get all the reviews
         app.get('/reviews', async (req, res) => {
             const reviews = await reviewCollection.find().toArray();
             res.send(reviews);
         });
 
+        // to post a review
+        app.post('/review', async (req, res) => {
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review);
+            res.send(result);
+        });
 
+        // ----------------------------------------------
+
+
+
+        // ------------------ ORDERS --------------------
+
+        // to post an order
         app.post('/order', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.send(result);
         });
+
+        // ----------------------------------------------
+
     }
     finally {
 
