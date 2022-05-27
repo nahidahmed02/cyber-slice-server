@@ -21,6 +21,7 @@ async function run() {
         await client.connect();
         const partsCollection = client.db('cyber_slice').collection('parts');
         const reviewCollection = client.db('cyber_slice').collection('reviews');
+        const orderCollection = client.db('cyber_slice').collection('order');
 
 
         // to get all parts
@@ -41,6 +42,13 @@ async function run() {
         app.get('/reviews', async (req, res) => {
             const reviews = await reviewCollection.find().toArray();
             res.send(reviews);
+        });
+
+
+        app.post('/order', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
         });
     }
     finally {
