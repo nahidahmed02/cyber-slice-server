@@ -44,6 +44,14 @@ async function run() {
 
         // ------------------ USERS -------------------
 
+        // to get all users
+        app.get('/user', verifyJWT, async (req, res) => {
+            const users = await userCollection.find().toArray();
+            res.send(users);
+        });
+
+
+        // to add user to database
         app.put('/user/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
