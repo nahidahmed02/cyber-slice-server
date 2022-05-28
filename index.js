@@ -79,6 +79,15 @@ async function run() {
 
         // ------------------ PROFILE ---------------------
 
+        // to get profile
+        app.get('/profile', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = profileCollection.find(query);
+            const profile = await cursor.toArray();
+            res.send(profile);
+        });
+
         // to post a profile
         app.post('/profile', async (req, res) => {
             const profile = req.body;
