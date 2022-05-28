@@ -19,10 +19,31 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
+        const userCollection = client.db('cyber_slice').collection('user');
         const partsCollection = client.db('cyber_slice').collection('parts');
         const reviewCollection = client.db('cyber_slice').collection('reviews');
         const orderCollection = client.db('cyber_slice').collection('order');
         const profileCollection = client.db('cyber_slice').collection('profile');
+
+
+        // ------------------ USERS -------------------
+
+        app.put('/user/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = req.body;
+            const filter = { email: email };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: user,
+            };
+            const result = await userCollection.updateOne(filter, updateDoc, options);
+            const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '23h' });
+            res.send({ result, token });
+        });
+
+
+        // ---------------------------------------------
+
 
 
         // ------------------ PARTS -------------------
