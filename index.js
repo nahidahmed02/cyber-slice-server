@@ -66,6 +66,15 @@ async function run() {
 
         // ------------------ ORDERS --------------------
 
+        // to get order of an individual user
+        app.get('/order', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = orderCollection.find(query);
+            const order = await cursor.toArray();
+            res.send(order);
+        });
+
         // to post an order
         app.post('/order', async (req, res) => {
             const order = req.body;
@@ -79,7 +88,7 @@ async function run() {
 
         // ------------------ PROFILE ---------------------
 
-        // to get profile
+        // to get profile of an individual user
         app.get('/profile', async (req, res) => {
             const email = req.query.email;
             const query = { email: email };
