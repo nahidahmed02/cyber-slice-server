@@ -22,6 +22,7 @@ async function run() {
         const partsCollection = client.db('cyber_slice').collection('parts');
         const reviewCollection = client.db('cyber_slice').collection('reviews');
         const orderCollection = client.db('cyber_slice').collection('order');
+        const profileCollection = client.db('cyber_slice').collection('profile');
 
 
         // ------------------ PARTS -------------------
@@ -69,6 +70,19 @@ async function run() {
         app.post('/order', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
+            res.send(result);
+        });
+
+        // ----------------------------------------------
+
+
+
+        // ------------------ PROFILE ---------------------
+
+        // to post a profile
+        app.post('/profile', async (req, res) => {
+            const profile = req.body;
+            const result = await profileCollection.insertOne(profile);
             res.send(result);
         });
 
