@@ -115,6 +115,13 @@ async function run() {
             res.send(part);
         });
 
+        // to add a parts
+        app.post('/parts', verifyJWT, verifyAdmin, async (req, res) => {
+            const parts = req.body;
+            const result = await partsCollection.insertOne(parts);
+            res.send(result);
+        });
+
         // ----------------------------------------------
 
 
