@@ -155,6 +155,12 @@ async function run() {
 
         // ------------------ ORDERS --------------------
 
+        // to get all orders
+        app.get('/order', async (req, res) => {
+            const orders = await orderCollection.find().toArray();
+            res.send(orders);
+        });
+
         // to get order of an individual user
         app.get('/order', verifyJWT, async (req, res) => {
             const email = req.query.email;
