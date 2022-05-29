@@ -55,7 +55,7 @@ async function run() {
         // ------------------ USERS -------------------
 
         // to get all users
-        app.get('/user', verifyJWT, async (req, res) => {
+        app.get('/user', verifyJWT, verifyAdmin, async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
         });
@@ -123,7 +123,7 @@ async function run() {
         });
 
         // to delete a parts
-        app.delete('/parts/:id', async (req, res) => {
+        app.delete('/parts/:id', verifyJWT, verifyAdmin, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await partsCollection.deleteOne(query);
@@ -156,13 +156,13 @@ async function run() {
         // ------------------ ORDERS --------------------
 
         // to get all orders
-        app.get('/order', async (req, res) => {
+        app.get('/order', verifyJWT, verifyAdmin, async (req, res) => {
             const orders = await orderCollection.find().toArray();
             res.send(orders);
         });
 
         // to get order of an individual user
-        app.get('/order', verifyJWT, async (req, res) => {
+        app.get('/order', verifyJWT, verifyAdmin, async (req, res) => {
             const email = req.query.email;
             const decodedEmail = req.decoded.email;
             if (email === decodedEmail) {
@@ -185,7 +185,7 @@ async function run() {
         });
 
         // to delete an order
-        app.delete('/order/:id', async (req, res) => {
+        app.delete('/order/:id', verifyJWT, verifyAdmin, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await orderCollection.deleteOne(query);
@@ -199,7 +199,7 @@ async function run() {
         // ------------------ PROFILE ---------------------
 
         // to get profile of an individual user
-        app.get('/profile', async (req, res) => {
+        app.get('/profile', verifyJWT, verifyAdmin, async (req, res) => {
             const email = req.query.email;
             const query = { email: email };
             const cursor = profileCollection.find(query);
