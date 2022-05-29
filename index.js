@@ -214,6 +214,24 @@ async function run() {
             res.send(result);
         });
 
+        // update profile
+        app.put('/profile/:email', async (req, res) => {
+            const email = req.params.email;
+            const updatedProfile = req.body;
+            const filter = { email: email };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    education: updatedUser.education,
+                    location: updatedUser.location,
+                    phone: updatedUser.phone,
+                    linkedin: updatedUser.linkedin
+                }
+            };
+            const result = await profileCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        })
+
         // ----------------------------------------------
 
     }
