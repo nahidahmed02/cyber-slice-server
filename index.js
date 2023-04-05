@@ -222,14 +222,20 @@ async function run() {
             const options = { upsert: true };
             const updatedDoc = {
                 $set: {
-                    education: updatedUser.education,
-                    location: updatedUser.location,
-                    phone: updatedUser.phone,
-                    linkedin: updatedUser.linkedin
+                    education: updatedProfile.education,
+                    location: updatedProfile.location,
+                    phone: updatedProfile.phone,
+                    linkedin: updatedProfile.linkedin
                 }
             };
-            const result = await profileCollection.updateOne(filter, updatedDoc, options);
-            res.send(result);
+            try {
+                const result = await profileCollection.updateOne(filter, updatedDoc, options);
+                res.send(result);
+            } catch (error) {
+                console.error(error);
+                res.status(500).send('Failed to update profile');
+            }
+
         })
 
         // ----------------------------------------------
