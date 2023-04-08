@@ -19,6 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 function verifyJWT(req, res, next) {
     const authHeader = req.headers.authorization;
+    console.log(authHeader);
     if (!authHeader) {
         return res.status(401).send({ message: 'Unauthorized access' });
     }
@@ -199,8 +200,8 @@ async function run() {
         // ------------------ PROFILE ---------------------
 
         // to get profile of an individual user
-        app.get('/profile', verifyJWT, verifyAdmin, async (req, res) => {
-            const email = req.query.email;
+        app.get('/profile/:email', verifyJWT, async (req, res) => {
+            const email = req.params.email;
             const query = { email: email };
             const cursor = profileCollection.find(query);
             const profile = await cursor.toArray();
