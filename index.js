@@ -88,6 +88,17 @@ async function run() {
             res.send(result);
         });
 
+        // to remove a user from the admin role
+        app.put('/admin/:email', verifyJWT, verifyAdmin, async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const update = { $set: { role: 'user' } };
+            const options = { returnOriginal: false };
+            const result = await userCollection.findOneAndUpdate(query, update, options);
+            res.send(result);
+        });
+
+        // to get admins
         app.get('/admin/:email', async (req, res) => {
             const email = req.params.email;
             const user = await userCollection.findOne({ email: email });
