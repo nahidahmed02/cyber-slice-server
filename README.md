@@ -1,8 +1,11 @@
 # Cyber Slice
 [Live Site Link](https://cyber-slice.web.app).
 
-## It's a full-stack website of a computer parts manufacturer. Where various kinds of compiter parts will be found.
+## It's a full-stack website of a computer parts manufacturer. Where various kinds of computer parts will be found.
 
+## Admin Credentials
+Email: test02@gmail.com
+Password: 111222
 
 ## Feature
 
@@ -16,13 +19,15 @@
 
 ## Used Technology
 
-* ReactJs
-* Mongodb
-* ExpressJs
+* ReactJS
+* Node JS
+* MongoDB
+* ExpressJS
 * Firebase
+* React Router
 * React Query
 * React-Hook-Form
 * Tailwind CSS
 * DaisyUI
 * React Toast
-* Heroku
+* Render
